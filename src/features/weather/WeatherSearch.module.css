@@ -1,0 +1,35 @@
+/* features/weather/WeatherSearch.module.css */
+.weatherSearch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.input {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 80%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0070f3;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
