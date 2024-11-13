@@ -1,8 +1,13 @@
-.weather-app {
+/* WeatherApp.module.css */
+.weatherApp {
   font-family: Arial, sans-serif;
   max-width: 300px;
   margin: auto;
   color: #333;
+}
+
+.header {
+  margin-bottom: 10px;
 }
 
 .header p {
@@ -10,29 +15,29 @@
   color: #888;
 }
 
-.temperature-slider {
+.temperatureSlider {
   display: flex;
   align-items: center;
   margin: 10px 0;
   color: #555;
 }
 
-.temperature-slider span {
+.temperatureSlider span {
   font-size: 14px;
   margin-right: 8px;
 }
 
-.temperature-slider input[type="range"] {
+.temperatureSlider input[type="range"] {
   width: 100%;
 }
 
-.city-list {
+.cityList {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.city-card {
+.cityCard {
   position: relative;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -44,23 +49,23 @@
   transition: background-color 0.3s;
 }
 
-.city-card:hover {
+.cityCard:hover {
   background-color: #f0f0f0;
 }
 
-.city-name {
+.cityName {
   font-weight: bold;
   font-size: 16px;
   color: #333;
 }
 
-.pm-info,
-.wind-info {
+.pmInfo,
+.windInfo {
   font-size: 14px;
   color: #666;
 }
 
-.remove-button {
+.removeButton {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -72,6 +77,6 @@
   transition: color 0.3s;
 }
 
-.remove-button:hover {
+.removeButton:hover {
   color: #555;
 }
