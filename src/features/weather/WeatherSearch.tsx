@@ -18,6 +18,7 @@ const WeatherSearch: React.FC = () => {
             setCityWeather(weather);
             setError(null);
         } catch (e) {
+            console.log(e)
             setError('City not found');
             setCityWeather(null);
         }
