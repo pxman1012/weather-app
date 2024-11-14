@@ -14,6 +14,7 @@
 3. Tạo file .env.local và thêm API key của OpenWeatherMap:
     ```bash
     NEXT_PUBLIC_WEATHER_API_KEY=your_openweathermap_api_key
+    NEXT_PUBLIC_BASE_URL=https://api.openweathermap.org
     ```
 4. Chạy ứng dụng:
     ```bash
@@ -42,6 +43,7 @@ A simple weather application built with Next.js and TypeScript.
 3. Create a `.env.local` file and add your OpenWeatherMap API key:
     ```bash
     NEXT_PUBLIC_WEATHER_API_KEY=your_openweathermap_api_key
+    NEXT_PUBLIC_BASE_URL=https://api.openweathermap.org
     ```
 4. Start the application:
     ```bash

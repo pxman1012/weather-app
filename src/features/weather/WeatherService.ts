@@ -5,15 +5,16 @@ import { CityWeather } from "@/types/city-weather-types";
 
 // const API_KEY = 'YOUR_API_KEY'; // Thay YOUR_API_KEY bằng key thật từ OpenWeatherMap
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY; // Thay YOUR_API_KEY bằng key thật từ OpenWeatherMap
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; // 
 
 export async function fetchWeatherData(city: string): Promise<CityWeather> {
     try {
-        const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
+        const weatherResponse = await fetch(`${BASE_URL}/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
         const weatherData = await weatherResponse.json();
 
         const { lat, lon } = weatherData.coord;
 
-        const airQualityResponse = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+        const airQualityResponse = await fetch(`${BASE_URL}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
         const airQualityData = await airQualityResponse.json();
 
         // Truy xuất các thông số PM10, PM2.5 từ dữ liệu air quality
