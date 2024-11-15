@@ -2,6 +2,8 @@
 
 export type Language = 'en' | 'vi';
 
+type TranslationKeys = keyof typeof translations["en"]; // Extract valid keys from one language
+
 const translations = {
     en: {
         title: 'Weather App',
@@ -43,6 +45,6 @@ const translations = {
     },
 };
 
-export const getText = (language: Language, key: string): string => {
+export const getText = (language: Language, key: TranslationKeys): string => {
     return translations[language][key];
 };
