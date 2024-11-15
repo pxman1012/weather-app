@@ -6,8 +6,8 @@ import WeatherSearch from '../features/weather/WeatherSearch';
 
 export default function Home() {
   return (
-    <div className='w-[400px] m-auto bg-blue-300 p-2 my-2'>
-      <h1>Weather App</h1>
+    <div className='w-full h-screen m-auto bg-gradient-to-b from-blue-300 via-green-400 to-yellow-950'>
+      <h1 className='font-bold p-2'>Weather App</h1>
       <WeatherSearch />
 
       {/* <WeatherApp /> */}
