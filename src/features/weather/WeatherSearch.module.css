@@ -1,15 +1,24 @@
 /* features/weather/WeatherSearch.module.css */
-.weatherSearch {
+.container{
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
 }
 
+.weatherSearch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+
+
 .input {
   padding: 8px;
-  margin-bottom: 10px;
-  width: 80%;
+  width: 300px;
   max-width: 300px;
   border: 1px solid #ddd;
   border-radius: 4px;
