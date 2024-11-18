@@ -8,6 +8,7 @@ const translations = {
     en: {
         title: 'Weather App',
         placeHoderSearch: 'Enter city name',
+        placeHoderAddressSearch: 'Enter address',
         search: 'Search',
         pm: 'PM 10',
         wind: 'Wind',
@@ -27,6 +28,7 @@ const translations = {
     vi: {
         title: 'Dự báo thời tiết',
         placeHoderSearch: 'Nhập tên thành phố',
+        placeHoderAddressSearch: 'Nhập địa điểm',
         search: 'Tìm kiếm',
         pm: 'Bụi thô < 10μm',
         wind: 'Gió',
