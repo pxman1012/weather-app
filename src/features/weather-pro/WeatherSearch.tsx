@@ -3,16 +3,15 @@
 // features/weather/WeatherSearch.tsx
 import React, { useState } from 'react';
 import styles from './WeatherSearch.module.css'; // Import CSS module
-// import { AddressWeather } from '../../types/address-weather-types';
 import { fetchWeatherData } from './WeatherService';
 import { getText } from '@/utils/translations';
 import { useLanguage } from '@/context/LanguageContext';
 import AddressCard from '@/components/address-card/AddressCard';
+import { AddressWeather } from '@/types/address-weather-types';
 
 const WeatherSearch: React.FC = () => {
     const [addressName, setAddressName] = useState('');
-    const [addressWeather, setAddressWeather] = useState<any | null>(null);
-    // const [addressWeather, setAddressWeather] = useState<AddressWeather | null>(null);
+    const [addressWeather, setAddressWeather] = useState<AddressWeather | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const { language } = useLanguage(); // Access language from context
