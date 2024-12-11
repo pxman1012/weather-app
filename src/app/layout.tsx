@@ -21,13 +21,14 @@ export const metadata = {
     description: 'Cung cấp thông tin thời tiết mọi nơi hàng ngày',
     referrer: 'origin-when-cross-origin',
     keywords: ['Pxman Weather', 'pxman weather', 'pxman weather', 'pxman', 'weather'],
-    verification: { google: "KwBfMRUHLxoVSRgslxDNpA6i5Or_MQuECQVzYNJKDsE", },
+    // verification: { google: "KwBfMRUHLxoVSRgslxDNpA6i5Or_MQuECQVzYNJKDsE", },
+    verification: { google: "1bnjDunz3YqNb_w_wruOxg7AL-0KCoC4_tKPdNGNtO4", },
     openGraph: {
         title: "Pxman Weather",
         description:
             "Xem thời tiết hàng ngày",
         // images: [`https://gitlab.com/public-store/share-asset/-/raw/main/weather-logo.png`],
-        images: [`https://gitlab.com/public-store/share-asset/-/raw/main/giroud.jpg`],
+        images: [`https://gitlab.com/public-store/share-asset/-/raw/main/weather-icon.jpg`],
         type: "website",
         siteName: "Pxman Weather", // Thêm thuộc tính site_name vào openGraph
     },

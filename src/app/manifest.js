@@ -6,15 +6,15 @@ export default function manifest() {
             "Cập nhật tình hình thời tiết tại Pxman Weather",
         icons: [
             {
-                src: "https://salt.tikicdn.com/ts/upload/2f/51/80/5643672027a54bfa593300f53c91c12a.png",
-                // src: "/img/weather-icon.jpg",
+                // src: "https://salt.tikicdn.com/ts/upload/2f/51/80/5643672027a54bfa593300f53c91c12a.png",
+                src: "/img/weather-icon.jpg",
                 sizes: "192x192",
                 type: "image/png",
                 purpose: "any maskable",
             },
             {
-                src: "https://salt.tikicdn.com/ts/upload/2f/51/80/5643672027a54bfa593300f53c91c12a.png",
-                // src: "/img/weather-icon.jpg",
+                // src: "https://salt.tikicdn.com/ts/upload/2f/51/80/5643672027a54bfa593300f53c91c12a.png",
+                src: "/img/weather-icon.jpg",
                 sizes: "512x512",
                 type: "image/png",
                 purpose: "any maskable",
@@ -28,14 +28,14 @@ export default function manifest() {
         related_applications: [
             {
                 platform: "play",
-                url: "https://play.google.com/store/apps/details?id=vn.tiki.app.tikiandroid",
-                // url: "/img/weather-icon.jpg",
+                // url: "https://play.google.com/store/apps/details?id=vn.tiki.app.tikiandroid",
+                url: "/img/weather-icon.jpg",
                 id: "vn.tiki.app.tikiandroid",
             },
             {
                 platform: "itunes",
-                url: "https://apps.apple.com/vn/app/tiki-shopping-fast-shipping/id958100553",
-                // url: "/img/weather-icon.jpg",
+                // url: "https://apps.apple.com/vn/app/tiki-shopping-fast-shipping/id958100553",
+                url: "/img/weather-icon.jpg",
             },
             {
                 platform: "webapp",
