@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import GoogleAnalytics from './google-analytics'
+import AdSense from '@/components/AdSense'
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -42,6 +43,18 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                {/* Google AdSense */}
+                {/* <Script
+                    async
+                    src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
+                    crossorigin="anonymous"
+                    // strategy="afterInteractive"
+                    strategy="lazyOnload"
+                /> */}
+                <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}/>
+                {/* <AdSense pId="ca-pub-1234567890123456"/> */}
+            </head>
             <GoogleAnalytics GA_TRACKING_ID={process.env.NEXT_PUBLIC_GA_TRACKING_ID} />
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
