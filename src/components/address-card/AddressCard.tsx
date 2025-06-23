@@ -2,7 +2,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AddressCard.module.css'; // Import CSS module
 import { getText } from '@/utils/translations';
 import { useLanguage } from '@/context/LanguageContext';
@@ -16,6 +16,14 @@ type AddressCardProps = {
 const AddressCard: React.FC<AddressCardProps> = ({ address }) => {
     const { language } = useLanguage(); // Access language from context
     const [more, setMore] = useState(false);
+
+    useEffect(() => {
+        const weatherMore = localStorage.getItem('weatherMore');
+        if (weatherMore === '1') {
+            setMore(true);
+        }
+    }, []);
+
 
     const formatTime = (timestamp: number) => {
         return new Date(timestamp * 1000).toLocaleTimeString();
@@ -47,7 +55,10 @@ const AddressCard: React.FC<AddressCardProps> = ({ address }) => {
 
                 <button
                     className={styles.toggleButton}
-                    onClick={() => setMore(!more)}
+                    onClick={() => {
+                        localStorage.setItem('weatherMore', !more ? '1' : '0')
+                        setMore(!more)
+                    }}
                 >
                     {more ? getText(language, 'showLess') : getText(language, 'showMore')}
                 </button>
