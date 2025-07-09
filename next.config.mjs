@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+
+import { redirects, rewrites } from './routes.config.js';
+
+const nextConfig = {
+    async rewrites() {
+        return rewrites;
+    },
+    async redirects() {
+        return redirects;
+    },
+};
 
 export default nextConfig;
