@@ -8,6 +8,7 @@ type Props = {
     language: 'vi' | 'en';
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LEVEL_COLORS: Record<any, string> = {
     good: '#22c55e',
     medium: '#eab308',
