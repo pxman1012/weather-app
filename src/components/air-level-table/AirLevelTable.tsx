@@ -4,7 +4,7 @@ import styles from './AirLevelTable.module.css';
 
 type Props = {
     levels: readonly { level: AirLevelType; min: number; max: number }[];
-    currentLevel: any;
+    currentLevel: AirLevelType;
     language: 'vi' | 'en';
 };
 
