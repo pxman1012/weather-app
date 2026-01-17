@@ -1,0 +1,51 @@
+/* ================= Tooltip.module.css ================= */
+.wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 6px;
+}
+
+.icon {
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 50;
+    min-width: 200px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #111827;
+    color: #f9fafb;
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Positions */
+.top {
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bottom {
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.left {
+    right: 120%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.right {
+    left: 120%;
+    top: 50%;
+    transform: translateY(-50%);
+}
