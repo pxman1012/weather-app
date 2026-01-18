@@ -23,7 +23,7 @@ const LanguageToggle: React.FC = () => {
         router.push(`${pathname}?${params.toString()}`);
 
         // Sync context
-        toggleLanguage(lang);
+        toggleLanguage();
     };
 
     return (
