@@ -1,7 +1,7 @@
 // utils/airLevel.ts
 export type AirLevelType = 'good' | 'medium' | 'warning' | 'danger';
 
-export const AIR_LEVEL_TEXT_KEY: Record<AirLevelType, any> = {
+export const AIR_LEVEL_TEXT_KEY: Record<AirLevelType, string> = {
     good: 'air_good',
     medium: 'air_medium',
     warning: 'air_warning',
