@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { getText } from "@/utils/translations";
 import LanguageToggle from "@/components/language-toggle/LanguageToggle";
@@ -39,9 +39,7 @@ export default function Home() {
 
             {/* Main */}
             <main className="w-full max-w-md px-4">
-                <Suspense fallback={null}>
-                    <WeatherSearch />
-                </Suspense>
+                <WeatherSearch />
             </main>
         </div>
     );

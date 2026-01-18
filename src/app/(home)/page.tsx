@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomeClient from "./_components/HomeClient";
+import { Suspense } from "react";
 
 type Props = {
     searchParams: { s?: string; lang?: string };
@@ -39,5 +40,9 @@ export async function generateMetadata(
 }
 
 export default function Page() {
-    return <HomeClient />;
+    return (
+        <Suspense fallback={null}>
+            <HomeClient />
+        </Suspense>
+    );
 }
