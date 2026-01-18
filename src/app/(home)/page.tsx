@@ -5,15 +5,14 @@ type Props = {
     searchParams: { s?: string; lang?: string };
 };
 
-// Translation SEO (SERVER-SIDE)
 const SEO_TEXT = {
     vi: {
-        searchTitle: (q: string) => `${q} | Dự báo thời tiết`,
+        searchTitle: (q: string) => q,
         searchDesc: (q: string) => `Dự báo thời tiết ${q}`,
         defaultDesc: "Dự báo thời tiết hàng ngày",
     },
     en: {
-        searchTitle: (q: string) => `${q} | Weather forecast`,
+        searchTitle: (q: string) => q,
         searchDesc: (q: string) => `Weather forecast for ${q}`,
         defaultDesc: "Daily weather forecast",
     },
@@ -35,7 +34,7 @@ export async function generateMetadata(
             "Pxman Weather",
             "weather forecast",
             keyword,
-        ].filter(Boolean),
+        ].filter((v): v is string => Boolean(v)),
     };
 }
 
