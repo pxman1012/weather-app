@@ -1,26 +1,36 @@
 'use client'
 
-import React from 'react';
-import { useLanguage } from '@/context/LanguageContext';
-import { getText } from '@/utils/translations';
-import LanguageToggle from '@/components/language-toggle/LanguageToggle';
-// import WeatherApp from '../components/weather/WeatherApp';
-// import WeatherSearch from '../features/weather/WeatherSearch';
-import WeatherSearch from '@/features/weather-pro/WeatherSearch';
+import React from 'react'
+import { useLanguage } from '@/context/LanguageContext'
+import { getText } from '@/utils/translations'
+import LanguageToggle from '@/components/language-toggle/LanguageToggle'
+import WeatherSearch from '@/features/weather-pro/WeatherSearch'
 
 export default function Home() {
-  const { language } = useLanguage(); // Access language from context
+  const { language } = useLanguage()
 
   return (
-    <div className='w-full h-screen m-auto bg-gradient-to-b from-blue-300 via-green-400 to-yellow-950'>
-      <h1 className='font-bold p-2'>{getText(language, 'title')}</h1>
-      <div className='m-auto w-fit'>
+    <div className="
+      min-h-screen w-full
+      flex flex-col items-center
+      bg-gradient-to-b from-sky-300 via-emerald-400 to-amber-900
+    ">
+      {/* Header */}
+      <header className="
+        w-full max-w-md
+        flex items-center justify-between
+        px-4 pt-6 pb-4
+      ">
+        <h1 className="text-lg font-semibold text-white">
+          {getText(language, 'title')}
+        </h1>
         <LanguageToggle />
-      </div>
+      </header>
 
-      <WeatherSearch />
-
-      {/* <WeatherApp /> */}
+      {/* Main */}
+      <main className="w-full max-w-md px-4">
+        <WeatherSearch />
+      </main>
     </div>
-  );
+  )
 }

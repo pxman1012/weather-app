@@ -32,8 +32,7 @@ export default function AirQualityItem({ label, value, language }: Props) {
 
     return (
         <div className={`${styles.pmItem} ${styles[primaryLevel]}`}>
-            🌫 {label}: {value}
-
+            🌫 {label}: {value}<br/>
             <Tooltip
                 content={
                     <>

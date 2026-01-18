@@ -12,13 +12,17 @@ import { AddressWeather } from '@/types/address-weather-types';
 const WeatherSearch: React.FC = () => {
     const [addressName, setAddressName] = useState('');
     const [addressWeather, setAddressWeather] = useState<AddressWeather | null>(null);
+    const [loading, setLoading] = useState(false);
+
     const [error, setError] = useState<string | null>(null);
 
     const { language } = useLanguage(); // Access language from context
 
     const handleSearch = async () => {
         try {
+            setLoading(true);
             const weather = await fetchWeatherData(addressName);
+            setLoading(false);
             if (weather) {
                 setAddressWeather(weather);
                 setError(null);
@@ -50,10 +54,13 @@ const WeatherSearch: React.FC = () => {
                     placeholder={getText(language, 'placeHoderAddressSearch')}
                     className={styles.input}
                 />
-                <button onClick={handleSearch} className={styles.button}>{getText(language, 'search')}</button>
+                <button onClick={handleSearch} className={styles.button} disabled={loading}>
+                    {/* {getText(language, 'search')} */}
+                    {loading ? '...' : getText(language, 'search')}
+                </button>
             </div>
 
-            {error && <p className={styles.error}>{error}</p>}
+            {error && <p className={styles.error}>⚠️ {language === 'vi' ? 'Địa chỉ không tồn tại' : error}</p>}
             {addressWeather && <AddressCard address={addressWeather} />}
         </div>
     );
