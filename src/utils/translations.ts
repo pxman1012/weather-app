@@ -6,7 +6,8 @@ type TranslationKeys = keyof (typeof translations)["en"]; // Extract valid keys 
 
 const translations = {
     en: {
-        title: "Weather App",
+        title: "Pxman Weather App",
+        openInNewTab: 'Open in new tab',
         placeHoderSearch: "Enter city name",
         placeHoderAddressSearch: "Enter address",
         search: "Search",
@@ -36,6 +37,7 @@ const translations = {
     },
     vi: {
         title: "Dự báo thời tiết",
+        openInNewTab: 'Mở trong tab mới',
         placeHoderSearch: "Nhập tên thành phố",
         placeHoderAddressSearch: "Nhập địa điểm",
         search: "Tìm kiếm",
