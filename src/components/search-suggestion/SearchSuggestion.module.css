@@ -1,0 +1,64 @@
+.suggestionList {
+    position: absolute;
+    width: calc(100% - 28px);
+    top: 66px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    margin-top: 6px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.suggestionItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+
+    font-size: 14px;
+    font-weight: 500;
+    /* 👈 nhẹ hơn bold */
+    font-family: system-ui, -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI', Roboto,
+        'Helvetica Neue', Arial,
+        'Noto Sans', sans-serif;
+
+    color: #1f2937;
+    /* slate-800 */
+    letter-spacing: 0.2px;
+}
+
+.suggestionItem:not(:last-child) {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.suggestionText {
+    flex: 1;
+    cursor: pointer;
+}
+
+.suggestionItem:hover {
+    background: #f8fafc;
+    /* rất nhẹ */
+}
+
+.removeBtn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+
+    font-size: 12px;
+    line-height: 1;
+    opacity: 0.5;
+    color: #6b7280;
+    /* gray-500 */
+}
+
+.removeBtn:hover {
+    opacity: 1;
+    color: #ef4444;
+    /* red-500 */
+}
