@@ -13,6 +13,7 @@ export async function fetchWeatherData(address: string): Promise<AddressWeather 
         const addressData = await addressResponse.json();
 
         if (addressData.length > 0) {
+            // console.log('Address Data ======', { addressData });
             // setCoordinates({ lat: addressData[0].lat, lon: addressData[0].lon });
             const { lat, lon } = addressData[0];
 
