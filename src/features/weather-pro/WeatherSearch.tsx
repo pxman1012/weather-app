@@ -56,6 +56,7 @@ const WeatherSearch: React.FC = () => {
                 setAddressWeather(null)
             }
         } catch (e) {
+            console.log(e)
             setError(getText(language, 'addressNotFound'))
             setAddressWeather(null)
         } finally {
