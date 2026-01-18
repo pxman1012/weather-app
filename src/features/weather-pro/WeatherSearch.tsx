@@ -14,7 +14,7 @@ import { useSearchHistory } from '@/hooks/useSearchHistory'
 import SearchSuggestion from '@/components/search-suggestion/SearchSuggestion'
 
 const QUERY_KEY = 's'
-const LANG_KEY = 'lang'
+// const LANG_KEY = 'lang'
 
 const WeatherSearch: React.FC = () => {
     const router = useRouter()
