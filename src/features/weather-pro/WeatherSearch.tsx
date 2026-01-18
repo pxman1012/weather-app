@@ -1,51 +1,83 @@
 'use client'
 
-// features/weather/WeatherSearch.tsx
-import React, { useState } from 'react';
-import styles from './WeatherSearch.module.css'; // Import CSS module
-import { fetchWeatherData } from './WeatherService';
-import { getText } from '@/utils/translations';
-import { useLanguage } from '@/context/LanguageContext';
-import AddressCard from '@/components/address-card/AddressCard';
-import { AddressWeather } from '@/types/address-weather-types';
+import React, { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import styles from './WeatherSearch.module.css'
+import { fetchWeatherData } from './WeatherService'
+import { getText } from '@/utils/translations'
+import { useLanguage } from '@/context/LanguageContext'
+import AddressCard from '@/components/address-card/AddressCard'
+import { AddressWeather } from '@/types/address-weather-types'
+
+const QUERY_KEY = 's'
 
 const WeatherSearch: React.FC = () => {
-    const [addressName, setAddressName] = useState('');
-    const [addressWeather, setAddressWeather] = useState<AddressWeather | null>(null);
-    const [loading, setLoading] = useState(false);
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const { language } = useLanguage()
 
-    const [error, setError] = useState<string | null>(null);
+    const [addressName, setAddressName] = useState('')
+    const [addressWeather, setAddressWeather] = useState<AddressWeather | null>(null)
+    const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(false)
 
-    const { language } = useLanguage(); // Access language from context
+    /* =========================
+       1. LẤY SEARCH KEY TỪ URL
+       ========================= */
+    useEffect(() => {
+        const searchKey = searchParams.get(QUERY_KEY)
+        if (searchKey) {
+            setAddressName(searchKey)
+            handleSearch(searchKey)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    const handleSearch = async () => {
+    /* =========================
+       2. SEARCH + UPDATE URL
+       ========================= */
+    const handleSearch = async (value?: string) => {
+        const keyword = (value ?? addressName).trim()
+        if (!keyword) return
+
+        setLoading(true)
+        setError(null)
+
         try {
-            setLoading(true);
-            const weather = await fetchWeatherData(addressName);
-            setLoading(false);
+            // Update URL (không reload)
+            router.replace(`/?${QUERY_KEY}=${encodeURIComponent(keyword)}`)
+
+            const weather = await fetchWeatherData(keyword)
+
             if (weather) {
-                setAddressWeather(weather);
-                setError(null);
+                setAddressWeather(weather)
             } else {
-                setError('Address not found');
-                setAddressWeather(null);
+                setError(getText(language, 'addressNotFound'))
+                setAddressWeather(null)
             }
         } catch (e) {
-            console.log(e)
-            setError('Address not found');
-            setAddressWeather(null);
+            setError(getText(language, 'addressNotFound'))
+            setAddressWeather(null)
+        } finally {
+            setLoading(false)
         }
-    };
+    }
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            handleSearch();
+    /* =========================
+       3. ENTER TO SEARCH
+       ========================= */
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch()
         }
-    };
+    }
 
     return (
         <div className={styles.container}>
-            <div className={styles.weatherSearch}>
+            <div
+                className={`${styles.weatherSearch} ${error ? styles.errorState : ''
+                    }`}
+            >
                 <input
                     type="text"
                     value={addressName}
@@ -54,16 +86,20 @@ const WeatherSearch: React.FC = () => {
                     placeholder={getText(language, 'placeHoderAddressSearch')}
                     className={styles.input}
                 />
-                <button onClick={handleSearch} className={styles.button} disabled={loading}>
-                    {/* {getText(language, 'search')} */}
+
+                <button
+                    onClick={() => handleSearch()}
+                    className={styles.button}
+                    disabled={loading}
+                >
                     {loading ? '...' : getText(language, 'search')}
                 </button>
             </div>
 
-            {error && <p className={styles.error}>⚠️ {language === 'vi' ? 'Địa chỉ không tồn tại' : error}</p>}
+            {error && <p className={styles.error}>{error}</p>}
             {addressWeather && <AddressCard address={addressWeather} />}
         </div>
-    );
-};
+    )
+}
 
-export default WeatherSearch;
+export default WeatherSearch
