@@ -11,7 +11,7 @@ export default function Home() {
 
     const handleOpenNewTab = () => {
         if (typeof window === "undefined") return;
-        window.open(window.location.href, "_blank", "noopener,noreferrer");
+        window.open(window.location.href, "_blank");
     };
 
     return (
