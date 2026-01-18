@@ -12,7 +12,9 @@ import { AddressWeather } from '@/types/address-weather-types'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useSearchHistory } from '@/hooks/useSearchHistory'
 import SearchSuggestion from '@/components/search-suggestion/SearchSuggestion'
+
 const QUERY_KEY = 's'
+const LANG_KEY = 'lang'
 
 const WeatherSearch: React.FC = () => {
     const router = useRouter()
@@ -83,13 +85,14 @@ const WeatherSearch: React.FC = () => {
         setSuggestions([])
         setIsFocused(false)
 
-        // blur input khi search
         inputRef.current?.blur()
 
         try {
-            router.replace(
-                `/?${QUERY_KEY}=${encodeURIComponent(keyword)}`
-            )
+            // 🔥 giữ nguyên lang hiện tại
+            const params = new URLSearchParams(searchParams.toString())
+            params.set(QUERY_KEY, keyword)
+
+            router.replace(`/?${params.toString()}`)
 
             const weather = await fetchWeatherData(keyword)
 
@@ -97,9 +100,7 @@ const WeatherSearch: React.FC = () => {
                 setAddressWeather(weather)
                 saveHistory(keyword)
             } else {
-                setError(
-                    getText(language, 'addressNotFound')
-                )
+                setError(getText(language, 'addressNotFound'))
                 setAddressWeather(null)
             }
         } catch (e) {
