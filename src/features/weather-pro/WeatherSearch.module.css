@@ -16,16 +16,39 @@
 }
 
 /* Input */
+.inputWrapper {
+  position: relative;
+  flex: 1; /* 🔥 quan trọng */
+}
+
 .input {
-  flex: 1;
   height: 44px;
-  padding: 0 14px;
+  width: 100%;
+  padding: 0 28px 0 14px;
 
   border: none;
   outline: none;
   border-radius: 14px;
 
   font-size: 15px;
+  color: #374151;
+}
+
+.clearButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  font-size: 16px;
+  color: #9ca3af;
+}
+
+.clearButton:hover {
   color: #374151;
 }
 

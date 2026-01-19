@@ -145,42 +145,42 @@ const WeatherSearch: React.FC = () => {
 
     const handleRemoveSuggestion = (value: string) => {
         removeHistory(value)
-
-        // // refresh suggestions đang hiển thị
-        // const keyword = addressName.trim()
-        // if (!keyword) {
-        //     setSuggestions(getRecent())
-        // } else {
-        //     setSuggestions(filterHistory(keyword))
-        // }
     }
 
-
-    /* =========================
-       5. RENDER
-       ========================= */
     return (
         <div className={styles.container}>
             <div
                 className={`${styles.weatherSearch} ${error ? styles.errorState : ''
                     }`}
             >
-                <input
-                    ref={inputRef}
-                    type="text"
-                    value={addressName}
-                    onChange={(e) =>
-                        setAddressName(e.target.value)
-                    }
-                    onKeyDown={handleKeyDown}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    placeholder={getText(
-                        language,
-                        'placeHoderAddressSearch'
+                <div className={styles.inputWrapper}>
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={addressName}
+                        onChange={(e) => setAddressName(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        placeholder={getText(language, 'placeHoderAddressSearch')}
+                        className={styles.input}
+                    />
+
+                    {addressName && (
+                        <button
+                            type="button"
+                            className={styles.clearButton}
+                            onMouseDown={(e) => e.preventDefault()} // 🔥 tránh blur
+                            onClick={() => {
+                                setAddressName('')
+                                setSuggestions(getRecent())
+                                inputRef.current?.focus()
+                            }}
+                        >
+                            ✕
+                        </button>
                     )}
-                    className={styles.input}
-                />
+                </div>
 
                 <button
                     onClick={() => handleSearch()}
