@@ -16,4 +16,5 @@ export interface AddressWeather {
     visibility: number;    // Tầm nhìn (m) 
     sunrise: number;       // Thời gian mặt trời mọc (Unix timestamp)
     sunset: number;        // Thời gian mặt trời lặn (Unix timestamp)
+    isCurrentLocation?: boolean
 }

@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useEffect, useRef, useState, } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './WeatherSearch.module.css'
-import { fetchWeatherData } from './WeatherService'
+import { fetchWeatherByCoords, fetchWeatherData } from './WeatherService'
 import { getText } from '@/utils/translations'
 import { useLanguage } from '@/context/LanguageContext'
 import AddressCard from '@/components/address-card/AddressCard'
@@ -12,9 +12,14 @@ import { AddressWeather } from '@/types/address-weather-types'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useSearchHistory } from '@/hooks/useSearchHistory'
 import SearchSuggestion from '@/components/search-suggestion/SearchSuggestion'
+import { LocationIcon } from '@/components/icon/LocationIcon'
+import { SearchIcon } from '@/components/icon/SearchIcon'
 
+/* =========================
+   CONSTANTS
+   ========================= */
 const QUERY_KEY = 's'
-// const LANG_KEY = 'lang'
+const MY_LOCATION_KEY = 'my-location'
 
 const WeatherSearch: React.FC = () => {
     const router = useRouter()
@@ -43,42 +48,47 @@ const WeatherSearch: React.FC = () => {
     } = useSearchHistory()
 
     /* =========================
-       1. INIT SEARCH FROM URL
+       1. INIT FROM URL
        ========================= */
     useEffect(() => {
         const searchKey = searchParams.get(QUERY_KEY)
-        if (searchKey) {
-            setAddressName(searchKey)
-            handleSearch(searchKey)
+        if (!searchKey) return
+
+        if (searchKey === MY_LOCATION_KEY) {
+            handleGetCurrentLocation()
+            return
         }
+
+        setAddressName(searchKey)
+        handleSearch(searchKey)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     /* =========================
-       2. DEBOUNCE FILTER (CHỈ KHI FOCUS)
+       2. DEBOUNCE FILTER
        ========================= */
     useEffect(() => {
         if (!isFocused) return
 
         const keyword = debouncedValue.trim()
 
-        // 🔥 rỗng → show 5 recent
         if (!keyword) {
             setSuggestions(getRecent())
             return
         }
 
-        // 🔥 có text → filter
         setSuggestions(filterHistory(keyword))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedValue, isFocused, history])
 
     /* =========================
-       3. SEARCH
+       3. SEARCH BY KEYWORD
        ========================= */
     const handleSearch = async (value?: string) => {
         const keyword = (value ?? addressName).trim()
-        if (!keyword) return
+
+        // ⛔ chặn search my-location
+        if (!keyword || keyword === MY_LOCATION_KEY) return
 
         setLoading(true)
         setError(null)
@@ -88,10 +98,8 @@ const WeatherSearch: React.FC = () => {
         inputRef.current?.blur()
 
         try {
-            // 🔥 giữ nguyên lang hiện tại
             const params = new URLSearchParams(searchParams.toString())
             params.set(QUERY_KEY, keyword)
-
             router.replace(`/?${params.toString()}`)
 
             const weather = await fetchWeatherData(keyword)
@@ -113,11 +121,77 @@ const WeatherSearch: React.FC = () => {
     }
 
     /* =========================
-       4. EVENTS
+       4. GET CURRENT LOCATION
        ========================= */
-    const handleKeyDown = (
-        e: React.KeyboardEvent<HTMLInputElement>
-    ) => {
+    const handleGetCurrentLocation = () => {
+        if (!navigator.geolocation) {
+            setError(getText(language, 'geolocationNotSupported'))
+            return
+        }
+
+        setLoading(true)
+        setError(null)
+        setSuggestions([])
+        setIsFocused(false)
+        inputRef.current?.blur()
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                try {
+                    const { latitude, longitude } = position.coords
+
+                    const params = new URLSearchParams(searchParams.toString())
+                    params.set(QUERY_KEY, MY_LOCATION_KEY)
+                    router.replace(`/?${params.toString()}`)
+
+                    const weather = await fetchWeatherByCoords(latitude, longitude)
+
+                    if (weather) {
+                        setAddressWeather(weather)
+                        setAddressName('')
+                    } else {
+                        setError(getText(language, 'addressNotFound'))
+                        setAddressWeather(null)
+                    }
+                } catch (err) {
+                    console.error(err)
+                    setError(getText(language, 'locationFetchFailed'))
+                    setAddressWeather(null)
+                } finally {
+                    setLoading(false)
+                }
+            },
+            (geoError) => {
+                console.error(geoError)
+
+                switch (geoError.code) {
+                    case geoError.PERMISSION_DENIED:
+                        setError(getText(language, 'locationPermissionDenied'))
+                        break
+                    case geoError.POSITION_UNAVAILABLE:
+                        setError(getText(language, 'locationUnavailable'))
+                        break
+                    case geoError.TIMEOUT:
+                        setError(getText(language, 'locationTimeout'))
+                        break
+                    default:
+                        setError(getText(language, 'locationFetchFailed'))
+                }
+
+                setLoading(false)
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+        )
+    }
+
+    /* =========================
+       5. INPUT EVENTS
+       ========================= */
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             handleSearch()
         }
@@ -129,7 +203,6 @@ const WeatherSearch: React.FC = () => {
     }
 
     const handleBlur = () => {
-        // delay để click suggestion vẫn hoạt động
         setTimeout(() => {
             setIsFocused(false)
             setSuggestions([])
@@ -147,11 +220,15 @@ const WeatherSearch: React.FC = () => {
         removeHistory(value)
     }
 
+    /* =========================
+       6. RENDER
+       ========================= */
     return (
         <div className={styles.container}>
             <div
-                className={`${styles.weatherSearch} ${error ? styles.errorState : ''
-                    }`}
+                className={`${styles.weatherSearch} ${
+                    error ? styles.errorState : ''
+                }`}
             >
                 <div className={styles.inputWrapper}>
                     <input
@@ -170,7 +247,7 @@ const WeatherSearch: React.FC = () => {
                         <button
                             type="button"
                             className={styles.clearButton}
-                            onMouseDown={(e) => e.preventDefault()} // 🔥 tránh blur
+                            onMouseDown={(e) => e.preventDefault()}
                             onClick={() => {
                                 setAddressName('')
                                 setSuggestions(getRecent())
@@ -183,13 +260,22 @@ const WeatherSearch: React.FC = () => {
                 </div>
 
                 <button
+                    type="button"
+                    className={styles.iconButton}
+                    onClick={handleGetCurrentLocation}
+                    title={getText(language, 'useMyLocation')}
+                    disabled={loading}
+                >
+                    <LocationIcon />
+                </button>
+
+                <button
                     onClick={() => handleSearch()}
                     className={styles.button}
                     disabled={loading}
+                    title={getText(language, 'search')}
                 >
-                    {loading
-                        ? '...'
-                        : getText(language, 'search')}
+                    {loading ? '…' : <SearchIcon />}
                 </button>
 
                 {isFocused && (
@@ -201,13 +287,9 @@ const WeatherSearch: React.FC = () => {
                 )}
             </div>
 
-            {error && (
-                <p className={styles.error}>{error}</p>
-            )}
+            {error && <p className={styles.error}>{error}</p>}
 
-            {addressWeather && (
-                <AddressCard address={addressWeather} />
-            )}
+            {addressWeather && <AddressCard address={addressWeather} />}
         </div>
     )
 }

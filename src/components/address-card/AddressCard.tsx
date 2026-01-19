@@ -33,7 +33,17 @@ export default function AddressCard({ address }: Props) {
         <div className={styles.card}>
             {/* Header */}
             <div className={styles.header}>
-                <p className={styles.location}>📍 {address.name}</p>
+                <p className={styles.location}>
+                    📍{' '}
+                    {address.isCurrentLocation && (
+                        <>
+                            <span className={styles.myLocation}>
+                                ({getText(language, 'myLocation')})
+                            </span><br />
+                        </>
+                    )}
+                    {address.name}
+                </p>
 
                 <div className={styles.tempRow}>
                     <span className={styles.temp}>

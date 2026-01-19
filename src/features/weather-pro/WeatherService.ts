@@ -57,3 +57,61 @@ export async function fetchWeatherData(address: string): Promise<AddressWeather 
         throw new Error("Unable to fetch weather data");
     }
 }
+
+export async function fetchWeatherByCoords(
+    lat: number,
+    lon: number
+): Promise<AddressWeather | null> {
+    try {
+        /* =========================
+           1. REVERSE GEOCODING
+           ========================= */
+        const addressResponse = await fetch(
+            `${ADDRESS_BASE_URL}/reverse?lat=${lat}&lon=${lon}&format=json`
+        )
+        const addressData = await addressResponse.json()
+
+        /* =========================
+           2. WEATHER
+           ========================= */
+        const weatherResponse = await fetch(
+            `${BASE_URL}/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+        )
+        const weatherData = await weatherResponse.json()
+
+        /* =========================
+           3. AIR QUALITY
+           ========================= */
+        const airQualityResponse = await fetch(
+            `${BASE_URL}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+        )
+        const airQualityData = await airQualityResponse.json()
+
+        const pm10 = airQualityData.list?.[0]?.components?.pm10 ?? 0
+        const pm25 = airQualityData.list?.[0]?.components?.pm2_5 ?? 0
+
+        return {
+            name:
+                addressData?.display_name ||
+                `${lat.toFixed(3)}, ${lon.toFixed(3)}`,
+            isCurrentLocation: true,
+            pm: pm10,
+            pm25: pm25,
+            temperature: weatherData.main?.temp || 0,
+            feelsLike: weatherData.main?.feels_like || 0,
+            tempMin: weatherData.main?.temp_min || 0,
+            tempMax: weatherData.main?.temp_max || 0,
+            pressure: weatherData.main?.pressure || 0,
+            humidity: weatherData.main?.humidity || 0,
+            windSpeed: weatherData.wind?.speed || 0,
+            cloudiness: weatherData.clouds?.all || 0,
+            visibility: weatherData.visibility || 0,
+            sunrise: weatherData.sys?.sunrise || 0,
+            sunset: weatherData.sys?.sunset || 0,
+            country: weatherData.sys?.country || '',
+        }
+    } catch (e) {
+        console.error(e)
+        throw new Error('Unable to fetch weather data by coordinates')
+    }
+}

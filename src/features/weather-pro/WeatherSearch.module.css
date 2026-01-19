@@ -5,7 +5,7 @@
 /* Search card */
 .weatherSearch {
   display: flex;
-  gap: 10px;
+  gap: 6px;
   padding: 14px;
 
   border-radius: 20px;
