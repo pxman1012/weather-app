@@ -6,7 +6,6 @@ interface Props {
     inputRef: RefObject<HTMLInputElement>
     value: string
     placeholder: string
-    loading: boolean
     suggestions: string[]
     isFocused: boolean
     onChange: (v: string) => void
@@ -22,7 +21,6 @@ const WeatherSearchInput: React.FC<Props> = ({
     inputRef,
     value,
     placeholder,
-    loading,
     suggestions,
     isFocused,
     onChange,
