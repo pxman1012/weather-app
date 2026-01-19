@@ -46,7 +46,6 @@ const WeatherSearch: React.FC = () => {
                     inputRef={c.inputRef}
                     value={c.addressName}
                     placeholder={getText(language, c.placeholderKey)}
-                    loading={c.loading}
                     suggestions={c.suggestions}
                     isFocused={c.isFocused}
                     onChange={(v) => c.handleTyping(v)}
