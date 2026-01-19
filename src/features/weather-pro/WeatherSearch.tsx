@@ -32,7 +32,7 @@ const WeatherSearch: React.FC = () => {
     const [suggestions, setSuggestions] = useState<string[]>([])
     const [isFocused, setIsFocused] = useState(false)
 
-    const debouncedValue = useDebounce(addressName, 2000)
+    const debouncedValue = useDebounce(addressName, 300)
 
     const {
         history,
